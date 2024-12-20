@@ -23,6 +23,8 @@ It is a React JS-powered project that allows users to shop for products in an in
 
 - <strong>Order Tracking:</strong> Customers can track the status of their orders in real-time, from processing to shipping and delivery.
 
+-  <strong>Theme Switcher:</strong> Once Logged in, Users can change the main color for a better UI and also change the theme to their preference (Dark-Light modes)
+
 
 <br>
 
