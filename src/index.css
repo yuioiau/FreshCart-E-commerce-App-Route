@@ -31,6 +31,8 @@ code {
     --pagination-hover-color: #ffffff;
     --transition-speed: 0.3s;
     --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
+    --icon-color: #000;  /* Default for light mode */
+    --logo-color: #21313C;  /* Default dark color for light mode */
 }
 
 [data-theme='dark'] {
@@ -40,13 +42,15 @@ code {
     --bg-color: #1a1a1a;
     --shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px -1px, rgba(0, 0, 0, 0.24) 0px 4px 5px 0px, rgba(0, 0, 0, 0.22) 0px 1px 10px 0px;
     --navbar-toggler-filter: invert(1);
+    --icon-color: #fff;  /* White for dark mode */
+    --logo-color: #fff;  /* White for dark mode */
 }
 
 body {
     font-family: var(--font-family) !important;
     background-color: var(--bg-color);
     color: var(--text-color);
-    padding-top: 70px; /* Adjust this value based on your navbar height */
+    padding-top: 60px; /* Adjust this value based on your navbar height */
 }
 
 .border-main {
@@ -259,13 +263,16 @@ a, a:hover {
 
 /* Update navbar styles for dark mode */
 .navbar {
-    position: fixed;
+    position: sticky !important;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
     background-color: var(--bg-color) !important;
     box-shadow: var(--shadow);
+    width: 100%;
+    margin-top: 0 !important;
+    
 }
 
 .navbar-brand,
@@ -585,17 +592,140 @@ body,
 
 /* Update cart icon styles */
 .nav-icon {
-    color: var(--main-color) !important;
+    color: var(--icon-color) !important;
     transition: color 0.2s ease-out;
 }
 
 /* Remove the inline style from the cart icon and use this class instead */
 .fa-shopping-cart {
-    color: var(--main-color) !important;
+    color: var(--icon-color) !important;
 }
 
 /* Toast styling */
 .toast {
     border-radius: 8px;
     box-shadow: var(--shadow);
+}
+
+/* Add logo styling */
+.logo {
+    color: var(--logo-color) !important;
+    transition: color 0.2s ease-out;
+}
+
+/* Style the cart icon in the logo if it exists */
+.logo .fa-cart-shopping,
+.logo .fa-shopping-cart {
+    color: var(--logo-color) !important;
+}
+
+/* Add logo text styles */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--logo-color) !important;
+}
+
+.navbar-brand:hover {
+    color: var(--logo-color) !important;
+}
+
+/* Update the existing logo styles */
+.navbar-brand img {
+    height: 30px;
+}
+
+/* Style for the logo SVG */
+.navbar-brand svg {
+    fill: var(--logo-color);
+    color: var(--logo-color);
+}
+
+/* Style for the logo text */
+.navbar-brand {
+    color: var(--logo-color) !important;
+}
+
+.navbar-brand:hover {
+    color: var(--logo-color) !important;
+}
+
+/* Keep existing logo image size */
+.navbar-brand img {
+    height: 30px;
+}
+
+/* Add SVG specific styling */
+.navbar-brand svg path {
+    transition: fill 0.2s ease-out, stroke 0.2s ease-out;
+}
+
+/* Style the cart icon path */
+.navbar-brand svg path:first-child {
+    stroke: var(--main-color);
+}
+
+/* Style the text paths */
+.navbar-brand svg path:not(:first-child):not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(5)) {
+    fill: var(--logo-color);
+}
+
+/* Keep the cart lines green */
+.navbar-brand svg path:nth-child(2),
+.navbar-brand svg path:nth-child(3),
+.navbar-brand svg path:nth-child(4),
+.navbar-brand svg path:nth-child(5) {
+    stroke: var(--main-color);
+}
+
+/* Target the text paths in the logo SVG specifically */
+.navbar-brand svg path[fill="#21313C"] {
+    fill: var(--logo-color);
+    transition: fill 0.2s ease-out;
+}
+
+/* Keep the cart icon green */
+.navbar-brand svg path[stroke="#0AAD0A"] {
+    stroke: var(--main-color);
+}
+
+/* Fix navbar positioning and z-index */
+.navbar {
+    position: sticky !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: var(--bg-color);
+    box-shadow: var(--shadow);
+    margin-top: 0 !important;
+}
+
+/* Remove the body padding since we don't need it with sticky positioning */
+body {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Fix toast notifications positioning */
+.Toaster {
+    position: fixed !important;
+    z-index: 9999 !important;
+    top: 0 !important;
+    transform: translateY(calc(60px + var(--scroll-position, 0px))) !important;
+    transition: transform 0.3s var(--transition-function) !important;
+}
+
+/* Fix offline message positioning */
+.offline {
+    position: fixed !important;
+    z-index: 1500;
+    top: 60px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 8px;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
 }

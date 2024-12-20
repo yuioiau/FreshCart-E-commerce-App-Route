@@ -1,9 +1,9 @@
 import './App.css';
 import jwtDecode from 'jwt-decode';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { useState } from 'react';
-import { Offline } from 'react-detect-offline';
-import { Toaster } from 'react-hot-toast';
+import { useState, useEffect } from 'react';
+import { Offline, Online } from 'react-detect-offline';
+import { Toaster, toast } from 'react-hot-toast';
 import { CartContextProvider } from './Context/CartContext.js';
 import { ProductsContextProvider } from './Context/ProductsContext.js';
 import { AuthenticationContextProvider } from './Context/AuthenticationContext.js';
@@ -29,6 +29,34 @@ import AllOrders from './Components/AllOrders/AllOrders';
 function App() {
 
   const [userData, setUserData] = useState(null);
+  const [wasOffline, setWasOffline] = useState(false);
+
+  // Handle online status
+  useEffect(() => {
+    const handleOnline = () => {
+      if (wasOffline) {
+        toast.success('You are back online!', {
+          icon: '🌐',
+          duration: 3000,
+          position: 'top-center'
+        });
+      }
+      setWasOffline(false);
+    };
+
+    window.addEventListener('online', handleOnline);
+    return () => window.removeEventListener('online', handleOnline);
+  }, [wasOffline]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      document.documentElement.style.setProperty('--scroll-position', `${window.scrollY}px`);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   function saveUserDate() {
     let encodedToken = localStorage.getItem('userToken');
     if (encodedToken) {
@@ -65,9 +93,9 @@ function App() {
           You are offline
           <i className="fa-solid fa-face-frown fa-xl ms-2"></i>
         </div>
+        {!wasOffline && setWasOffline(true)}
       </Offline>
     </div>
-    <Toaster />
 
     <AuthenticationContextProvider>
       <ProductsContextProvider>

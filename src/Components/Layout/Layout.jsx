@@ -101,7 +101,7 @@ export default function Layout({ userData, setUserData, saveUserDate }) {
     }, [userData])
 
 
-    return <div className='pt-5 bg-pattern-img' style={{ backgroundImage: `url(${bgPattern})` }}>
+    return <div className='bg-pattern-img' style={{ backgroundImage: `url(${bgPattern})` }}>
         <Navbar userData={userData} logOut={logOut} />
         <div className="container">
             {!(cartIsLoading === false && wishListtIsLoading === false && categoriesIsLoading === false) ? <Loader /> : <Outlet></Outlet>}

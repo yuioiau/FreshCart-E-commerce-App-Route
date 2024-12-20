@@ -78,20 +78,23 @@ export default function ThemeSwitcher({ logOut }) {
                         />
                     </div>
 
-                    <hr className="my-3" />
-                    
-                    <button 
-                        className="btn w-100"
-                        style={{
-                            backgroundColor: mainColor,
-                            borderColor: mainColor,
-                            color: '#fff'
-                        }}
-                        onClick={() => logOut("Bye bye 😢")}
-                    >
-                        <i className="fas fa-sign-out-alt me-2"></i>
-                        Logout
-                    </button>
+                    {logOut && (
+                        <>
+                            <hr className="my-3" />
+                            <button 
+                                className="btn w-100"
+                                style={{
+                                    backgroundColor: mainColor,
+                                    borderColor: mainColor,
+                                    color: '#fff'
+                                }}
+                                onClick={() => logOut("Bye bye 😢")}
+                            >
+                                <i className="fas fa-sign-out-alt me-2"></i>
+                                Logout
+                            </button>
+                        </>
+                    )}
                 </div>
             )}
         </div>

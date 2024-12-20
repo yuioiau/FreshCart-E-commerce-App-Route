@@ -49,7 +49,6 @@ export function CartContextProvider(props) {
         try {
             const response = await addToCartApi(productId);
             if (response?.data?.status === 'success') {
-                toast.success('Added to cart successfully!');
                 setNumOfCartItems(response.data.numOfCartItems);
                 setCartId(response.data.data._id);
                 setCartDetails(response.data.data);

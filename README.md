@@ -91,15 +91,6 @@ To get started with the Fresh Cart frontend project, follow these steps:
 
 <br>
 
-
-## Feedback
-I'm excited to hear your <u><a href="https://forms.gle/38PiwB5dUTHNTPAS6" target="_blank">feedback</a></u> and discuss potential collaborations in this ever-evolving field.
-
-
-
-
-<br>
-
 ## Sample Photos 
 
 #### Register Page
