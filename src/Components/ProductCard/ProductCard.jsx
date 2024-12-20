@@ -50,26 +50,22 @@ export default function ProductCard({ product, showSubcategory }) {
     async function deleteProductFromWishList(productId) {
         let res = await removeItemFromWishList(productId);
         if (res?.data?.status === 'success') {
-            // setNumOfFavoriteItems(res?.data?.count);
             setIsFavorite(false);
-            toast.success('Item removed Successfuly');
             getWishListInfo();
         }
-        else {
-            (res?.response?.data?.message === 'Expired Token. please login again') ? getOut() : toast.error("Failed to remove item");
+        else if (res?.response?.data?.message === 'Expired Token. please login again') {
+            getOut();
         }
     }
 
     async function addProductToWishList(productId) {
         let res = await addToWishList(productId);
         if (res?.data?.status === 'success') {
-            // setNumOfFavoriteItems(res?.data?.data?.length);
             setIsFavorite(true);
-            toast.success(res?.data?.message);
             getWishListInfo();
         }
-        else {
-            (res?.response?.data?.message === 'Expired Token. please login again') ? getOut() : toast.error("Failed to remove item");
+        else if (res?.response?.data?.message === 'Expired Token. please login again') {
+            getOut();
         }
     }
 

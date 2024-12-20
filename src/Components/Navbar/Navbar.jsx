@@ -4,16 +4,18 @@ import logo from '../../assets/freshcart-logo.svg'
 import { Link } from 'react-router-dom'
 import { cartContext } from '../../Context/CartContext.js'
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher.jsx'
+import { Toaster } from 'react-hot-toast'
 
 export default function Navbar({ userData, logOut }) {
 
     let { numOfCartItems, numOfFavoriteItems } = useContext(cartContext);
 
     return <>
+        <Toaster position="top-right" />
         <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
             <div className="container">
                 <Link className="navbar-brand" to="/">
-                    <img src={logo} alt="Logo" />
+                    <img src={logo} alt="Fresh Cart" height="30" />
                 </Link>
                 <button className="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +70,7 @@ export default function Navbar({ userData, logOut }) {
                                 </li>
                                 <li className="nav-item position-relative">
                                     <Link className="nav-link" to="cart">
-                                        <i className='fas fa-shopping-cart fa-xl' style={{color: 'var(--text-color)'}}></i>
+                                        <i className='fas fa-shopping-cart fa-xl nav-icon'></i>
                                         {
                                             numOfCartItems > 0 ? <span className='badge bg-main text-white position-absolute top-0 end-0'>{numOfCartItems}</span> : null
                                         }

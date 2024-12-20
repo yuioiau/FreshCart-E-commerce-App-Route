@@ -31,13 +31,18 @@ export default function WishList() {
         if (res?.data?.status === 'success') {
             setWishListDetails(res?.data?.data);
             setNumOfFavoriteItems(res?.data?.count);
-            getWishList();
         }
         else {
-            if (res?.response?.data?.message == 'Expired Token. please login again') getOut();
+            if (res?.response?.data?.message === 'Expired Token. please login again') {
+                getOut();
+            }
         }
         setIsLoading(false);
     }
+
+    useEffect(() => {
+        getWishList();
+    }, []);
 
     async function deleteItem(productId) {
         let res = await removeItemFromWishList(productId);

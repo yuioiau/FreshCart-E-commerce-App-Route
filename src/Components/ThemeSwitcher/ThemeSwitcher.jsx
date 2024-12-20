@@ -27,9 +27,22 @@ export default function ThemeSwitcher({ logOut }) {
         localStorage.setItem('mainColor', color);
     };
 
+    const hexToRGB = (hex) => {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return { r, g, b };
+    };
+
+    const calculateLogoFilter = ({ r, g, b }) => {
+        return `brightness(0) saturate(100%) invert(${Math.round(r/255*100)}%) sepia(${Math.round(g/255*100)}%) saturate(${Math.round(b/255*100)}%) hue-rotate(${Math.round(Math.atan2(b, r) * 180 / Math.PI)}deg)`;
+    };
+
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
-        applyTheme(newTheme);
+        setTheme(newTheme);
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
     };
 
     return (

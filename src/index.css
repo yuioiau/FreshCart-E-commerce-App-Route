@@ -46,6 +46,7 @@ body {
     font-family: var(--font-family) !important;
     background-color: var(--bg-color);
     color: var(--text-color);
+    padding-top: 70px; /* Adjust this value based on your navbar height */
 }
 
 .border-main {
@@ -258,12 +259,20 @@ a, a:hover {
 
 /* Update navbar styles for dark mode */
 .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     background-color: var(--bg-color) !important;
     box-shadow: var(--shadow);
 }
 
-.navbar-light .navbar-nav .nav-link {
+.navbar-brand,
+.navbar-light .navbar-nav .nav-link,
+.navbar-nav .nav-link {
     color: var(--text-color) !important;
+    transition: color 0.2s ease-out;
 }
 
 .navbar-light .navbar-toggler {
@@ -518,4 +527,75 @@ html {
     background-color: var(--main-color) !important;
     border-color: var(--main-color) !important;
     transform: translateY(0);
+}
+
+/* Update transition properties to use hardware acceleration and optimize performance */
+body, 
+.navbar, 
+.footer,
+.theme-menu,
+.product,
+.btn {
+    /* Reduce properties being animated */
+    transition: background-color 0.2s ease-out,
+                color 0.2s ease-out;
+    /* Enable GPU acceleration */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* Optimize theme switcher animations */
+.theme-switcher-btn {
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+}
+
+/* Optimize product animations */
+.product {
+    transform: translateZ(0);
+    will-change: transform;
+    transition: transform 0.2s ease-out,
+                box-shadow 0.2s ease-out;
+}
+
+/* Optimize brand logo animations */
+.brand-logo {
+    will-change: transform, opacity;
+    transition: all 0.3s ease-out;
+}
+
+/* Optimize form animations */
+.form-control {
+    transition: transform 0.2s ease-out,
+                border-color 0.2s ease-out;
+    will-change: transform;
+}
+
+/* Add logo styles */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar-brand img {
+    height: 30px;
+}
+
+/* Update cart icon styles */
+.nav-icon {
+    color: var(--main-color) !important;
+    transition: color 0.2s ease-out;
+}
+
+/* Remove the inline style from the cart icon and use this class instead */
+.fa-shopping-cart {
+    color: var(--main-color) !important;
+}
+
+/* Toast styling */
+.toast {
+    border-radius: 8px;
+    box-shadow: var(--shadow);
 }

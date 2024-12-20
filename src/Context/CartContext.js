@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 
 
@@ -13,20 +14,51 @@ export function CartContextProvider(props) {
         token: localStorage.getItem('userToken'),
     }
 
+    // Define API functions
+    const addToCartApi = async (productId) => {
+        return axios.post(`https://ecommerce.routemisr.com/api/v1/cart`, {
+            productId: productId
+        }, { headers });
+    };
+
+    const removeFromCartApi = async (productId) => {
+        return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, 
+            { headers }
+        );
+    };
+
+    const addToWishListApi = async (productId) => {
+        return axios.post(`https://ecommerce.routemisr.com/api/v1/wishlist`, {
+            productId: productId
+        }, { headers });
+    };
+
+    const removeFromWishListApi = async (productId) => {
+        return axios.delete(`https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`, 
+            { headers }
+        );
+    };
 
     // ----------->> Cart <<----------- 
 
     const [cartId, setCartId] = useState(null);
     const [numOfCartItems, setNumOfCartItems] = useState(0);
+    const [cartDetails, setCartDetails] = useState(null);
 
     async function addToCart(productId) {
-        return axios.post(`https://ecommerce.routemisr.com/api/v1/cart`,
-            {
-                productId: productId
-            },
-            {
-                headers: headers
-            }).then((res) => res).catch((error) => error);
+        try {
+            const response = await addToCartApi(productId);
+            if (response?.data?.status === 'success') {
+                toast.success('Added to cart successfully!');
+                setNumOfCartItems(response.data.numOfCartItems);
+                setCartId(response.data.data._id);
+                setCartDetails(response.data.data);
+            }
+            return response;
+        } catch (error) {
+            toast.error('Failed to add to cart');
+            return error;
+        }
     }
 
     async function getLoggedUserCart() {
@@ -36,9 +68,18 @@ export function CartContextProvider(props) {
     }
 
     async function removeItemFromCart(productId) {
-        return axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, { headers })
-            .then((res) => res)
-            .catch((error) => error);
+        try {
+            const response = await removeFromCartApi(productId);
+            if (response?.data?.status === 'success') {
+                toast.success('Removed from cart');
+                setNumOfCartItems(response.data.numOfCartItems);
+                setCartDetails(response.data.data);
+            }
+            return response;
+        } catch (error) {
+            toast.error('Failed to remove from cart');
+            return error;
+        }
     }
 
     async function updateProductCount(productId, count) {
@@ -96,19 +137,34 @@ export function CartContextProvider(props) {
     }
 
     async function addToWishList(productId) {
-        return axios.post(`https://ecommerce.routemisr.com/api/v1/wishlist`,
-            {
-                productId: productId
-            },
-            {
-                headers: headers
-            }).then((res) => res).catch((error) => error);
+        try {
+            const response = await addToWishListApi(productId);
+            if (response?.data?.status === 'success') {
+                toast.success('Added to wishlist!');
+                setNumOfFavoriteItems(response.data.data.length);
+                setWishListDetails(response.data.data);
+                return response;
+            }
+        } catch (error) {
+            toast.error('Failed to add to wishlist');
+            return error;
+        }
     }
 
     async function removeItemFromWishList(productId) {
-        return axios.delete(`https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`, { headers })
-            .then((res) => res)
-            .catch((error) => error);
+        try {
+            const response = await removeFromWishListApi(productId);
+            if (response?.data?.status === 'success') {
+                toast.success('Removed from wishlist');
+                setNumOfFavoriteItems(response.data.data.length);
+                setWishListDetails(response.data.data);
+                return response;
+            }
+            return response;
+        } catch (error) {
+            toast.error('Failed to remove from wishlist');
+            return error;
+        }
     }
 
     
@@ -116,6 +172,8 @@ export function CartContextProvider(props) {
     return <cartContext.Provider value={{
         cartId,
         setCartId,
+        cartDetails,
+        setCartDetails,
         numOfCartItems,
         setNumOfCartItems,
         addToCart,
