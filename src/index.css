@@ -17,20 +17,35 @@ code {
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&display=swap');
 
 :root {
+    /* Light theme (default) */
     --main-color: #0aad0a;
     --light-color: #f0f3f2;
+    --text-color: #000000;
+    --bg-color: #ffffff;
     --shadow: rgba(145, 158, 171, .2) 0px 2px 4px -1px, rgba(145, 158, 171, .14) 0px 4px 5px 0px, rgba(145, 158, 171, .12) 0px 1px 10px 0px;
     --font-family: 'Encode Sans Expanded', sans-serif;
     --rating-color: #ffc908;
     --favorite-placeholder-color: #bdbdbd;
     --favorite-color: #dc3545;
-
     --pagination-color: #0aad0a;
     --pagination-hover-color: #ffffff;
+    --transition-speed: 0.3s;
+    --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme='dark'] {
+    --main-color: #0aad0a; /* This will be changeable */
+    --light-color: #2d2d2d;
+    --text-color: #ffffff;
+    --bg-color: #1a1a1a;
+    --shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px -1px, rgba(0, 0, 0, 0.24) 0px 4px 5px 0px, rgba(0, 0, 0, 0.22) 0px 1px 10px 0px;
+    --navbar-toggler-filter: invert(1);
 }
 
 body {
     font-family: var(--font-family) !important;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .border-main {
@@ -46,7 +61,7 @@ body {
 }
 
 a, a:hover {
-    color: black;
+    color: var(--text-color);
     text-decoration: none;
 }
 
@@ -195,4 +210,312 @@ a, a:hover {
     .category-img-slide {
         height: 300px;
     }
+}
+
+/* Add these new styles */
+.theme-switcher {
+    display: inline-block;
+    margin-left: 10px;
+    position: relative;
+}
+
+.theme-switcher-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--main-color);
+    border: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    margin-top: 10px;
+    background-color: var(--bg-color);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    min-width: 220px;
+    z-index: 1000;
+}
+
+.color-picker {
+    width: 100%;
+    height: 40px;
+    margin: 10px 0;
+    padding: 5px;
+    border: 1px solid var(--light-color);
+    border-radius: 4px;
+}
+
+/* Update navbar styles for dark mode */
+.navbar {
+    background-color: var(--bg-color) !important;
+    box-shadow: var(--shadow);
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: var(--text-color) !important;
+}
+
+.navbar-light .navbar-toggler {
+    color: var(--text-color);
+    border-color: var(--text-color);
+}
+
+.navbar-light .navbar-toggler-icon {
+    filter: var(--navbar-toggler-filter);
+}
+
+/* General transitions */
+.nav-link, 
+.btn,
+.product,
+.theme-switcher-btn,
+.heart-remove,
+.element {
+    transition: all var(--transition-speed) var(--transition-function);
+}
+
+/* Navbar animations */
+.navbar {
+    animation: slideDown 0.5s var(--transition-function);
+}
+
+/* Theme switcher animations */
+.theme-switcher-btn {
+    transition: transform 0.3s var(--transition-function);
+}
+
+.theme-switcher-btn:hover {
+    transform: rotate(90deg);
+}
+
+.theme-menu {
+    animation: fadeIn 0.3s var(--transition-function);
+}
+
+/* Product animations */
+.product {
+    transform: translateY(0);
+    transition: transform 0.3s var(--transition-function),
+                box-shadow 0.3s var(--transition-function),
+                border 0.3s var(--transition-function);
+}
+
+.product:hover {
+    transform: translateY(-5px);
+}
+
+.product .btn {
+    transition: transform 0.4s var(--transition-function),
+                opacity 0.3s var(--transition-function);
+}
+
+/* Heart icon animation */
+.heart-remove {
+    transition: transform 0.3s var(--transition-function),
+                color 0.3s var(--transition-function);
+}
+
+.heart-remove:hover {
+    transform: scale(1.1);
+}
+
+/* Page transition animations */
+.container {
+    animation: fadeIn 0.5s var(--transition-function);
+}
+
+/* Loading animation */
+.loader {
+    animation: rotate 1s linear infinite;
+}
+
+/* Define keyframe animations */
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Cart and wishlist badge animations */
+.badge {
+    animation: scaleIn 0.3s var(--transition-function);
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+/* Theme transition */
+body, 
+.navbar, 
+.footer,
+.theme-menu,
+.product,
+.btn {
+    transition: background-color 0.3s var(--transition-function),
+                color 0.3s var(--transition-function),
+                border-color 0.3s var(--transition-function),
+                box-shadow 0.3s var(--transition-function);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Button hover effects */
+.btn:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* Form input animations */
+.form-control {
+    transition: border-color 0.3s var(--transition-function),
+                box-shadow 0.3s var(--transition-function);
+}
+
+.form-control:focus {
+    transform: translateY(-1px);
+}
+
+/* Add smooth page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Add cart animation */
+@keyframes addToCart {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.cart-animation {
+  animation: addToCart 0.5s ease-out;
+}
+
+/* Brand logo animations */
+.brand-logo {
+    opacity: 0.7;
+    filter: grayscale(100%);
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1);
+    will-change: transform, opacity, filter;
+    position: relative;
+}
+
+.brand-logo:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: scale(1.08);
+}
+
+/* Slider animation for brand logos */
+.brand-slider {
+    animation: slideInfinite 40s linear infinite;
+    animation-play-state: running;
+    transition: animation-play-state 0.5s ease;
+}
+
+.brand-slider:hover {
+    animation-play-state: paused;
+}
+
+@keyframes slideInfinite {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(calc(-100% - 2rem)); /* Account for gap */
+    }
+}
+
+/* Smooth entrance animation for logos */
+.brand-logo {
+    animation: fadeInScale 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(30px);
+    }
+    60% {
+        transform: scale(1.05) translateY(-5px);
+    }
+    100% {
+        opacity: 0.7;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Update logout button styles */
+.theme-menu .btn-danger {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    opacity: 0.9;
+    transition: all 0.3s var(--transition-function);
+}
+
+.theme-menu .btn-danger:hover {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.theme-menu .btn-danger:active {
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color) !important;
+    transform: translateY(0);
 }
